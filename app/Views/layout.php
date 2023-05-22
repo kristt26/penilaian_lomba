@@ -65,14 +65,14 @@
                     <span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('periode')?>">
-                    <i class="fas fa-calendar"></i>
-                    <span>Periode</span></a>
+                <a class="nav-link" href="<?= base_url('lomba')?>">
+                    <i class="fas fa-trophy"></i>
+                    <span>Lomba</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('kriteria')?>">
-                    <i class="fas fa-list"></i>
-                    <span>Kriteria</span></a>
+                <a class="nav-link" href="<?= base_url('juri')?>">
+                    <i class="fas fa-user-secret"></i>
+                    <span>Juri</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url  ('alternatif')?>">

@@ -30,7 +30,21 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('periode', 'Admin\Periode::index');
+$routes->group('lomba', function($routes){
+    $routes->get('', 'Admin\Lomba::index');
+    $routes->get('read', 'Admin\Lomba::read');
+    $routes->post('post', 'Admin\Lomba::post');
+    $routes->put('put', 'Admin\Lomba::put');
+    $routes->delete('delete/(:any)', 'Admin\Lomba::delete/$1');
+});
+
+$routes->group('juri', function($routes){
+    $routes->get('', 'Admin\Juri::index');
+    $routes->get('read', 'Admin\Juri::read');
+    $routes->post('post', 'Admin\Juri::post');
+    $routes->put('put', 'Admin\Juri::put');
+    $routes->delete('delete/(:any)', 'Admin\Juri::delete/$1');
+});
 
 /*
  * --------------------------------------------------------------------

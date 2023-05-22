@@ -1,7 +1,8 @@
 angular.module('adminctrl', [])
     // Admin
     .controller('dashboardController', dashboardController)
-    .controller('periodeController', periodeController)
+    .controller('lombaController', lombaController)
+    .controller('juriController', juriController)
     .controller('kriteriaController', kriteriaController)
     .controller('alternatifController', alternatifController)
     .controller('laporanController', laporanController)
@@ -17,23 +18,26 @@ function dashboardController($scope, dashboardServices) {
     // })
 }
 
-function periodeController($scope, periodeServices, pesan, helperServices) {
-    $scope.setTitle = "Periode";
+function lombaController($scope, lombaServices, pesan, helperServices) {
+    $scope.setTitle = "Lomba";
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
     $scope.model = {};
-    periodeServices.get().then((res) => {
+    lombaServices.get().then((res) => {
         $scope.datas = res;
     })
     $scope.save = () => {
+        var data = angular.copy($scope.model);
+        data.mulai = helperServices.dateToString(data.mulai);
+        data.selesai = helperServices.dateToString(data.selesai);
         pesan.dialog('Yakin ingin?', 'Yes', 'Tidak').then(res => {
             if ($scope.model.id) {
-                periodeServices.put($scope.model).then(res => {
+                lombaServices.put(data).then(res => {
                     $scope.model = {};
                     pesan.Success("Berhasil mengubah data");
                 })
             } else {
-                periodeServices.post($scope.model).then(res => {
+                lombaServices.post(data).then(res => {
                     $scope.model = {};
                     pesan.Success("Berhasil menambah data");
                 })
@@ -43,12 +47,59 @@ function periodeController($scope, periodeServices, pesan, helperServices) {
 
     $scope.edit = (item) => {
         $scope.model = angular.copy(item);
+        $scope.model.mulai = new Date($scope.model.mulai);
+        $scope.model.selesai = new Date($scope.model.selesai);
         document.getElementById("periode").focus();
     }
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin?', 'Ya', 'Tidak').then(res => {
-            klasifikasiServices.deleted(param).then(res => {
+            lombaServices.deleted(param).then(res => {
+                pesan.Success("Berhasil menghapus data");
+            })
+        });
+    }
+
+    $scope.subKlasifikasi = (param) => {
+        document.location.href = helperServices.url + "admin/sub_klasifikasi/data/" + param.id;
+    }
+}
+
+function juriController($scope, juriServices, pesan, helperServices) {
+    $scope.setTitle = "Juri";
+    $scope.$emit("SendUp", $scope.setTitle);
+    $scope.datas = {};
+    $scope.model = {};
+    juriServices.get().then((res) => {
+        $scope.datas = res;
+    })
+    $scope.save = () => {
+        var data = angular.copy($scope.model);
+        pesan.dialog('Yakin ingin?', 'Yes', 'Tidak').then(res => {
+            if ($scope.model.id) {
+                juriServices.put(data).then(res => {
+                    $scope.model = {};
+                    pesan.Success("Berhasil mengubah data");
+                })
+            } else {
+                juriServices.post(data).then(res => {
+                    $scope.model = {};
+                    pesan.Success("Berhasil menambah data");
+                })
+            }
+        })
+    }
+
+    $scope.edit = (item) => {
+        $scope.model = angular.copy(item);
+        $scope.model.mulai = new Date($scope.model.mulai);
+        $scope.model.selesai = new Date($scope.model.selesai);
+        document.getElementById("periode").focus();
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin?', 'Ya', 'Tidak').then(res => {
+            juriServices.deleted(param).then(res => {
                 pesan.Success("Berhasil menghapus data");
             })
         });
@@ -221,13 +272,13 @@ function alternatifController($scope, alternatifServices, kriteriaServices, pesa
     }
 }
 
-function laporanController($scope, periodeServices, pesan, helperServices, laporanServices) {
+function laporanController($scope, lombaServices, pesan, helperServices, laporanServices) {
     $scope.setTitle = "Laporan";
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
     $scope.periodes = {};
     $scope.model = {};
-    periodeServices.get().then((res) => {
+    lombaServices.get().then((res) => {
         $scope.periodes = res;
     })
     $scope.hitung = (param) => {
