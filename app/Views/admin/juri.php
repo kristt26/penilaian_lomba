@@ -14,11 +14,11 @@
                             <label class="control-label">Juri</label>
                             <input type="text" class="form-control" id="juri" ng-model="model.nama" required>
                         </div>
-                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label" ng-if="!model.id">
                             <label class="control-label">Username</label>
                             <input type="text" class="form-control" id="username" ng-model="model.username" required>
                         </div>
-                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label" ng-if="!model.id">
                             <label class="control-label">Password</label>
                             <input type="text" class="form-control" id="password" ng-model="model.password" required>
                         </div>

@@ -75,14 +75,14 @@
                     <span>Juri</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url  ('alternatif')?>">
-                    <i class="fas fa-users"></i>
-                    <span>Alternatif</span></a>
+                <a class="nav-link" href="<?= base_url  ('kriteria')?>">
+                    <i class="fas fa-list"></i>
+                    <span>Kriteria</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url  ('laporan')?>">
                     <i class="fas fa-file"></i>
-                    <span>Laporan Hasil</span></a>
+                    <span>Hasil Lomba</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

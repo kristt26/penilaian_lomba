@@ -5,6 +5,7 @@ function AuthService($http, $q, helperServices, pesan) {
     var service = {};
     return {
         login: login,
+        regis: regis,
         setRole: setRole,
         // logOff: logoff,
         // userIsLogin: userIsLogin,
@@ -28,6 +29,24 @@ function AuthService($http, $q, helperServices, pesan) {
         }).then(res => {
             var user = res.data;
             def.resolve(user);
+        }, err => {
+            def.reject(err.data.messages.error);
+            pesan.error(err.data.messages.error);
+        });
+        return def.promise;
+    }
+
+    function regis(user) {
+        var def = $q.defer();
+        $http({
+            method: 'POST',
+            url: helperServices.url + "/auth/post",
+            data: user,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            def.resolve(res.data);
         }, err => {
             def.reject(err.data.messages.error);
             pesan.error(err.data.messages.error);
