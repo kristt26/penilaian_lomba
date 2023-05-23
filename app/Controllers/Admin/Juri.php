@@ -11,8 +11,8 @@ class Juri extends BaseController
     protected $juri;
     public function index()
     {
-        echo phpinfo();
-        // return view('admin/juri');
+        // echo phpinfo();
+        return view('admin/juri');
     }
 
     public function read()
