@@ -11,7 +11,7 @@ class Auth extends BaseController
     {
         $user = new UserModel();
         if ($user->countAllResults() == 0) {
-            $user->insert(['username' => 'Administrator', 'password' => password_hash('Administrator#1', PASSWORD_DEFAULT)]);
+            $user->insert(['username' => 'Administrator', 'password' => password_hash('Administrator#1', PASSWORD_DEFAULT), 'role'=>'Admin']);
         }
         return view('login');
     }
@@ -23,7 +23,7 @@ class Auth extends BaseController
         $q = $user->where('username', $data->username)->first();
         if ($q) {
             if (password_verify($data->password, $q['password'])) {
-                session()->set(['nama' => 'Administrator', 'isRole' => true]);
+                session()->set(['nama' => 'Administrator', 'isRole' => true, 'role'=>$q['role']]);
                 return $this->respond(true);
             } else return $this->fail("Password salah");
         } else return $this->fail("Username tidak ditemukan");
