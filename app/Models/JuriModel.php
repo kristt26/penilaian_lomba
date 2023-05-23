@@ -13,5 +13,5 @@ class JuriModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama'];
+    protected $allowedFields    = ['nama', 'users_id'];
 }
