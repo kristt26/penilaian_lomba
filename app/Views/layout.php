@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <link href="<?= base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
     <!-- Propeller card (CSS for helping component example file)-->
     <link href="https://opensource.propeller.in/components/card/css/card.css" type="text/css" rel="stylesheet" />
 
@@ -57,13 +58,13 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url() ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
             <?php if (session()->get('role') == 'Admin') : ?>
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url() ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('lomba') ?>">
                         <i class="fas fa-trophy"></i>
@@ -85,6 +86,43 @@
                         <span>Hasil Lomba</span></a>
                 </li>
             <?php endif; ?>
+
+            <?php if (session()->get('role') == 'Peserta') : ?>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                        <i class="fas fa-registered"></i>
+                        <span>Pendaftaran Lomba</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                        <i class="fas fa-trophy"></i>
+                        <span>Hasil Lomba</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                        <i class="fas fa-history"></i>
+                        <span>History Lomba</span></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if (session()->get('role') == 'Juri') : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('penilaian') ?>">
+                        <i class="fas fa-list"></i>
+                        <span>Penilaian</span></a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                        <i class="fas fa-trophy"></i>
+                        <span>Hasil Lomba</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                        <i class="fas fa-history"></i>
+                        <span>History Lomba</span></a>
+                </li> -->
+            <?php endif; ?>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -97,16 +135,16 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow bg-gradient-info">
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><?= session()->get('nama') ?></li>
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-white small"><strong><?= session()->get('nama')." | ".session()->get('role') ?></strong></span>
                                 <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> -->
                                 <img class="img-profile rounded-circle" src="<?= base_url() ?>assets/img/undraw_profile.svg">
                             </a>

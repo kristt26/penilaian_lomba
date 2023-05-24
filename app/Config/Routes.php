@@ -71,6 +71,25 @@ $routes->group('sub', function ($routes) {
     $routes->delete('delete/(:num)', 'Admin\Sub::deleted/$1');
 });
 
+// Peserta
+$routes->group('pendaftaran', function ($routes) {
+    $routes->get('', 'Peserta\Pendaftaran::index');
+    $routes->get('read', 'Peserta\Pendaftaran::read');
+    $routes->post('post', 'Peserta\Pendaftaran::post');
+    $routes->put('put', 'Peserta\Pendaftaran::put');
+    $routes->delete('delete/(:num)', 'Peserta\Pendaftaran::deleted/$1');
+});
+
+// Juri
+$routes->group('penilaian', function ($routes) {
+    $routes->get('', 'Juri\Penilaian::index');
+    $routes->get('read', 'Juri\Penilaian::read');
+    $routes->post('post', 'Juri\Penilaian::post');
+    $routes->put('put', 'Juri\Penilaian::put');
+    $routes->delete('delete/(:num)', 'Juri\Penilaian::deleted/$1');
+});
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class LombaModel extends Model
+class PendaftaranModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'lomba';
+    protected $table            = 'pendaftaran';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['lomba', 'mulai', 'selesai', 'desc'];
+    protected $allowedFields    = ['peserta_id', 'lomba_id', 'nomor'];
 }

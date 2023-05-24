@@ -22,6 +22,11 @@
                             <label class="control-label">Tanggal Selesai</label>
                             <input type="date" class="form-control" id="selesai" ng-model="model.selesai" required>
                         </div>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label class="control-label">Informasi Lomba</label>
+                            <textarea class="form-control" id="desc" rows="10" ng-model="model.desc"></textarea>
+                            <!-- <input type="date" class="form-control" id="selesai" ng-model="model.selesai" required> -->
+                        </div>
                         <!-- <div class="form-group pmd-textfield pmd-textfield-floating-label">
                             <label class="control-label">Status</label>
                             <select class="form-control" ng-model="model.status">
@@ -51,6 +56,7 @@
                                     <th>Nama Lomba</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Selesai</th>
+                                    <th>Informasi</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 </tr>
                             </thead>
@@ -60,6 +66,7 @@
                                     <td>{{item.lomba}}</td>
                                     <td>{{item.mulai | date: 'EEEE, dd MMMM y'}}</td>
                                     <td>{{item.selesai | date: 'EEEE, dd MMMM y'}}</td>
+                                    <td width="40%">{{item.desc | limitTo: 200}} ...</td>
                                     <td>
                                         <button type="submit" class="btn btn-warning pmd-ripple-effect btn-sm" ng-click="edit(item)"><i class="fas fa-edit fa-sm fa-fw"></i></button>
                                         <button type="submit" class="btn btn-danger pmd-ripple-effect btn-sm" ng-click="delete(item)"><i class="fas fa-trash-alt fa-sm fa-fw"></i></button>

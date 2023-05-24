@@ -8,6 +8,9 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('home');
+        if(session()->get('isRole')){
+            return view('home');
+        }
+        return redirect()->to(base_url('auth'));
     }
 }

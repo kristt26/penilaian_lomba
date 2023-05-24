@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\JuriModel;
 use App\Models\PesertaModel;
 use App\Models\UserModel;
 
@@ -23,7 +24,17 @@ class Auth extends BaseController
         $q = $user->where('username', $data->username)->first();
         if ($q) {
             if (password_verify($data->password, $q['password'])) {
-                session()->set(['nama' => 'Administrator', 'isRole' => true, 'role'=>$q['role']]);
+                if($q['role']=='Admin'){
+                    session()->set(['uid'=>$q['id'],'nama' => 'Administrator', 'isRole' => true, 'role'=>$q['role']]);
+                }else if($q['role']=='Juri'){
+                    $juri = new JuriModel();
+                    $set = $juri->where('users_id', $q['id'])->first();
+                    session()->set(['uid'=>$q['id'],'nama' => $set['nama'], 'isRole' => true, 'role'=>$q['role']]);
+                }else{
+                    $peserta = new PesertaModel();
+                    $set = $peserta->where('users_id', $q['id'])->first();
+                    session()->set(['uid'=>$q['id'],'nama' => $set['nama'], 'isRole' => true, 'role'=>$q['role']]);
+                }
                 return $this->respond(true);
             } else return $this->fail("Password salah");
         } else return $this->fail("Username tidak ditemukan");

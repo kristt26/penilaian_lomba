@@ -6,6 +6,10 @@ angular.module('adminctrl', [])
     .controller('kriteriaController', kriteriaController)
     .controller('alternatifController', alternatifController)
     .controller('laporanController', laporanController)
+    // Peserta
+    .controller('pendaftaranController', pendaftaranController)
+    // Juri
+    .controller('penilaianController', penilaianController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -288,5 +292,56 @@ function laporanController($scope, lombaServices, pesan, helperServices, laporan
             $scope.datas = res;
             console.log(res);
         });
+    }
+}
+
+
+// Peserta
+
+function pendaftaranController($scope, pendaftaranServices, pesan, helperServices) {
+    $scope.setTitle = "Pendaftaran Lomba";
+    $scope.$emit("SendUp", $scope.setTitle);
+    $scope.datas = {};
+    $scope.model = {};
+    pendaftaranServices.get().then((res) => {
+        $scope.datas = res;
+        if($scope.datas.lomba.length > 0){
+            $scope.datas.lomba.forEach(element => {
+                var item = $scope.datas.daftar.find((x)=>x.lomba_id==element.id);
+                if(item) element.daftar = true;
+            });
+        }else pesan.info('Tidak ada lomba yang diselenggarakan');
+        console.log(res);
+    })
+    $scope.daftar = (param) => {
+        pesan.dialog('Yakin ingin mendaftar?', 'Yes', 'Tidak').then(res => {
+            pendaftaranServices.post(param).then(res => {
+                $scope.datas.daftar.push(res);
+                param.daftar = true;
+                pesan.Success("Berhasil menambah data");
+            })
+        })
+    }
+}
+
+// Penilaian
+
+function penilaianController($scope, penilaianServices, pesan, helperServices) {
+    $scope.setTitle = "Pendaftaran Lomba";
+    $scope.$emit("SendUp", $scope.setTitle);
+    $scope.datas = {};
+    $scope.model = {};
+    penilaianServices.get().then((res) => {
+        $scope.datas = res;
+        console.log(res);
+    })
+    $scope.daftar = (param) => {
+        pesan.dialog('Yakin ingin mendaftar?', 'Yes', 'Tidak').then(res => {
+            penilaianServices.post(param).then(res => {
+                $scope.datas.daftar.push(res);
+                param.daftar = true;
+                pesan.Success("Berhasil menambah data");
+            })
+        })
     }
 }
