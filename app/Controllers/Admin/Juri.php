@@ -11,8 +11,8 @@ class Juri extends BaseController
     protected $juri;
     public function index()
     {
-        echo phpinfo();
-        // return view('admin/juri');
+        // echo phpinfo();
+        return view('admin/juri');
     }
 
     public function read()
@@ -59,9 +59,9 @@ class Juri extends BaseController
     
     public function delete($id)
     {
-        $juri = new JuriModel();
+        $user = new UserModel();
         try {
-            $juri->delete($id);
+            $user->delete($id);
             return $this->respondDeleted(true);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());

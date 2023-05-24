@@ -57,33 +57,34 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url()?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('lomba')?>">
-                    <i class="fas fa-trophy"></i>
-                    <span>Lomba</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('juri')?>">
-                    <i class="fas fa-user-secret"></i>
-                    <span>Juri</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url  ('alternatif')?>">
-                    <i class="fas fa-users"></i>
-                    <span>Alternatif</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url  ('laporan')?>">
-                    <i class="fas fa-file"></i>
-                    <span>Laporan Hasil</span></a>
-            </li>
+            <?php if (session()->get('role') == 'Admin') : ?>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('lomba') ?>">
+                        <i class="fas fa-trophy"></i>
+                        <span>Lomba</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('juri') ?>">
+                        <i class="fas fa-user-secret"></i>
+                        <span>Juri</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('kriteria') ?>">
+                        <i class="fas fa-list"></i>
+                        <span>Kriteria</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('laporan') ?>">
+                        <i class="fas fa-file"></i>
+                        <span>Hasil Lomba</span></a>
+                </li>
+            <?php endif; ?>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -100,6 +101,7 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><?= session()->get('nama') ?></li>
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -171,7 +173,7 @@
                 <div class="modal-body">Pilih tombol keluar jikan ingin mengakhiri sesi</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<?= base_url('auth/logout')?>">Keluar</a>
+                    <a class="btn btn-primary" href="<?= base_url('auth/logout') ?>">Keluar</a>
                 </div>
             </div>
         </div>
@@ -226,7 +228,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url() ?>assets/js/sb-admin-2.min.js"></script>
-    
+
 
 </body>
 

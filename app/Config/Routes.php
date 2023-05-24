@@ -29,7 +29,17 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// Admin
 $routes->get('/', 'Home::index');
+$routes->group('auth', function ($routes) {
+    $routes->get('/', 'Auth::index');
+    $routes->post('login', 'Auth::login');
+    $routes->get('registration', 'Auth::regis');
+    $routes->post('post', 'Auth::post');
+    $routes->get('logout', 'Auth::logout');
+});
+
 $routes->group('lomba', function($routes){
     $routes->get('', 'Admin\Lomba::index');
     $routes->get('read', 'Admin\Lomba::read');
@@ -44,6 +54,21 @@ $routes->group('juri', function($routes){
     $routes->post('post', 'Admin\Juri::post');
     $routes->put('put', 'Admin\Juri::put');
     $routes->delete('delete/(:any)', 'Admin\Juri::delete/$1');
+});
+
+$routes->group('kriteria', function($routes){
+    $routes->get('', 'Admin\Kriteria::index');
+    $routes->get('read', 'Admin\Kriteria::read');
+    $routes->post('post', 'Admin\Kriteria::post');
+    $routes->put('put', 'Admin\Kriteria::put');
+    $routes->delete('delete/(:any)', 'Admin\Kriteria::deleted/$1');
+});
+
+$routes->group('sub', function ($routes) {
+    $routes->get('read', 'Admin\Sub::read');
+    $routes->post('post', 'Admin\Sub::post');
+    $routes->put('put', 'Admin\Sub::put');
+    $routes->delete('delete/(:num)', 'Admin\Sub::deleted/$1');
 });
 
 /*

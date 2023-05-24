@@ -94,7 +94,7 @@ function juriController($scope, juriServices, pesan, helperServices) {
         $scope.model = angular.copy(item);
         $scope.model.mulai = new Date($scope.model.mulai);
         $scope.model.selesai = new Date($scope.model.selesai);
-        document.getElementById("periode").focus();
+        document.getElementById("juri").focus();
     }
 
     $scope.delete = (param) => {
@@ -110,7 +110,7 @@ function juriController($scope, juriServices, pesan, helperServices) {
     }
 }
 
-function kriteriaController($scope, kriteriaServices, pesan, helperServices, RangeServices) {
+function kriteriaController($scope, kriteriaServices, pesan, helperServices, subServices) {
     $scope.setTitle = "Kriteria";
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
@@ -136,33 +136,35 @@ function kriteriaController($scope, kriteriaServices, pesan, helperServices, Ran
 
     $scope.edit = (item) => {
         item.bobot = parseInt(item.bobot);
+        item.profileKriteria = parseInt(item.profileKriteria);
         $scope.model = angular.copy(item);
-        // document.getElementById("nama").focus();
+        document.getElementById("kriteria").focus();
     }
 
-    $scope.showRange = (param) => {
+    $scope.showSub = (param) => {
         $.LoadingOverlay("show");
         setTimeout(() => {
             $.LoadingOverlay("hide");
             $scope.$applyAsync(x => {
                 $scope.kriteria = param;
-                $scope.model.kriteria_id = $scope.kriteria.id;
-                $scope.setTitle = "Range";
+                $scope.setTitle = "Sub";
             })
         }, 200);
     }
 
-    $scope.saveRange = () => {
+    $scope.saveSub = () => {
         pesan.dialog('Yakin ingin?', 'Yes', 'Tidak').then(res => {
+            $scope.model.kriteria_id = $scope.kriteria.id;
             if ($scope.model.id) {
-                RangeServices.put($scope.model).then(res => {
+                subServices.put($scope.model).then(res => {
                     $scope.model = {};
                     pesan.Success("Berhasil mengubah data");
                 })
             } else {
-                RangeServices.post($scope.model).then(res => {
+                subServices.post($scope.model).then(res => {
                     $scope.model.id = res;
-                    $scope.kriteria.range.push($scope.model);
+                    if(!$scope.kriteria.sub) $scope.kriteria.sub = [];
+                    $scope.kriteria.sub.push($scope.model);
                     $scope.model = {};
                     $scope.model.kriteria_id = $scope.kriteria.id;
                     pesan.Success("Berhasil menambah data");
@@ -178,9 +180,9 @@ function kriteriaController($scope, kriteriaServices, pesan, helperServices, Ran
             })
         });
     }
-    $scope.deleteRange = (param) => {
+    $scope.deleteSub = (param) => {
         pesan.dialog('Yakin ingin?', 'Ya', 'Tidak').then(res => {
-            RangeServices.deleted(param).then(res => {
+            subServices.deleted(param).then(res => {
                 var index = $scope.kriteria.range.indexOf(param);
                 $scope.kriteria.range.splice(index, 1);
                 pesan.Success("Berhasil menghapus data");

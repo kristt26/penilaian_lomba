@@ -4,7 +4,7 @@ angular.module('admin.service', [])
     .factory('lombaServices', lombaServices)
     .factory('juriServices', juriServices)
     .factory('kriteriaServices', kriteriaServices)
-    .factory('RangeServices', RangeServices)
+    .factory('subServices', subServices)
     .factory('alternatifServices', alternatifServices)
     .factory('laporanServices', laporanServices)
     ;
@@ -195,13 +195,7 @@ function juriServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                param.id = res.data;
-                if(param.status=='1'){
-                    service.data.forEach(element => {
-                        if(element.status=='1') element.status='0';
-                    });
-                }
-                service.data.push(param);
+                service.data.push(res.data);
                 def.resolve(param);
             },
             (err) => {
@@ -240,7 +234,7 @@ function juriServices($http, $q, helperServices, AuthService, pesan) {
         var def = $q.defer();
         $http({
             method: 'delete',
-            url: controller + "/delete/" + param.id,
+            url: controller + "/delete/" + param.users_id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
@@ -320,10 +314,10 @@ function kriteriaServices($http, $q, helperServices, AuthService, pesan) {
             (res) => {
                 var data = service.data.find(x => x.id == param.id);
                 if (data) {
-                    data.nama = param.nama;
-                    data.kode = param.kode;
+                    data.kriteria = param.kriteria;
+                    data.code = param.code;
+                    data.profileKriteria = param.profileKriteria;
                     data.bobot = param.bobot;
-                    data.type = param.type;
                 }
                 def.resolve(res.data);
             },
@@ -356,8 +350,8 @@ function kriteriaServices($http, $q, helperServices, AuthService, pesan) {
 
 }
 
-function RangeServices($http, $q, helperServices, AuthService, pesan) {
-    var controller = helperServices.url + 'range/';
+function subServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'sub/';
     var service = {};
     service.data = [];
     return {
