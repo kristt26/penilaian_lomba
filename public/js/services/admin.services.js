@@ -704,6 +704,7 @@ function penilaianServices($http, $q, helperServices, AuthService, pesan) {
     service.data = [];
     return {
         get: get,
+        getNilai: getNilai,
         post: post,
         put: put,
         deleted: deleted
@@ -718,6 +719,24 @@ function penilaianServices($http, $q, helperServices, AuthService, pesan) {
         }).then(
             (res) => {
                 service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function getNilai(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'getnilai/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {

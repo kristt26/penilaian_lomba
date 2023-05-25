@@ -32,6 +32,7 @@ $routes->set404Override();
 
 // Admin
 $routes->get('/', 'Home::index');
+$routes->get('perhitungan', 'Perhitungan::index');
 $routes->group('auth', function ($routes) {
     $routes->get('/', 'Auth::index');
     $routes->post('login', 'Auth::login');
@@ -83,10 +84,20 @@ $routes->group('pendaftaran', function ($routes) {
 // Juri
 $routes->group('penilaian', function ($routes) {
     $routes->get('', 'Juri\Penilaian::index');
+    $routes->get('getnilai/(:num)', 'Juri\Penilaian::getNilai/$1');
     $routes->get('read', 'Juri\Penilaian::read');
     $routes->post('post', 'Juri\Penilaian::post');
     $routes->put('put', 'Juri\Penilaian::put');
     $routes->delete('delete/(:num)', 'Juri\Penilaian::deleted/$1');
+});
+
+$routes->group('laporan', function ($routes) {
+    $routes->get('', 'Laporan::index');
+    $routes->post('hitung', 'Laporan::hitung');
+    $routes->get('read', 'Laporan::read');
+    $routes->post('post', 'Laporan::post');
+    $routes->put('put', 'Laporan::put');
+    $routes->delete('delete/(:num)', 'Laporan::deleted/$1');
 });
 
 

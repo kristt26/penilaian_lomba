@@ -167,7 +167,7 @@ function kriteriaController($scope, kriteriaServices, pesan, helperServices, sub
             } else {
                 subServices.post($scope.model).then(res => {
                     $scope.model.id = res;
-                    if(!$scope.kriteria.sub) $scope.kriteria.sub = [];
+                    if (!$scope.kriteria.sub) $scope.kriteria.sub = [];
                     $scope.kriteria.sub.push($scope.model);
                     $scope.model = {};
                     $scope.model.kriteria_id = $scope.kriteria.id;
@@ -224,16 +224,16 @@ function alternatifController($scope, alternatifServices, kriteriaServices, pesa
                     var itemKriteria = $scope.kriterias.find(x => x.kode == nilai.kode);
                     nilai.kriteria_id = itemKriteria.id;
                     if (itemKriteria) {
-                        if(nilai.value >= 51){
+                        if (nilai.value >= 51) {
                             itemKriteria.range.forEach(range => {
                                 var bobot = range.range.split("-");
                                 bobot[0] = parseInt(bobot[0]);
                                 bobot[1] = parseInt(bobot[1]);
                                 if (nilai.value >= bobot[0] && nilai.value <= bobot[1]) nilai.bobot = range.bobot;
-    
+
                                 // console.log(bobot);
                             });
-                        }else nilai.bobot = 0;
+                        } else nilai.bobot = 0;
                     }
                 });
             });
@@ -282,13 +282,13 @@ function laporanController($scope, lombaServices, pesan, helperServices, laporan
     $scope.setTitle = "Laporan";
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
-    $scope.periodes = {};
+    $scope.lomba = {};
     $scope.model = {};
     lombaServices.get().then((res) => {
-        $scope.periodes = res;
+        $scope.lomba = res;
     })
     $scope.hitung = (param) => {
-        laporanServices.hitung(param).then(res=>{
+        laporanServices.hitung(param).then(res => {
             $scope.datas = res;
             console.log(res);
         });
@@ -305,12 +305,15 @@ function pendaftaranController($scope, pendaftaranServices, pesan, helperService
     $scope.model = {};
     pendaftaranServices.get().then((res) => {
         $scope.datas = res;
-        if($scope.datas.lomba.length > 0){
+        if ($scope.datas.lomba.length > 0) {
             $scope.datas.lomba.forEach(element => {
-                var item = $scope.datas.daftar.find((x)=>x.lomba_id==element.id);
-                if(item) element.daftar = true;
+                var item = $scope.datas.daftar.find((x) => x.lomba_id == element.id);
+                if (item) {
+                    element.daftar = true;
+                    element.nomor = item.nomor;
+                }
             });
-        }else pesan.info('Tidak ada lomba yang diselenggarakan');
+        } else pesan.info('Tidak ada lomba yang diselenggarakan');
         console.log(res);
     })
     $scope.daftar = (param) => {
@@ -331,17 +334,43 @@ function penilaianController($scope, penilaianServices, pesan, helperServices) {
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
     $scope.model = {};
+    $scope.show = 'peserta';
     penilaianServices.get().then((res) => {
         $scope.datas = res;
         console.log(res);
     })
-    $scope.daftar = (param) => {
-        pesan.dialog('Yakin ingin mendaftar?', 'Yes', 'Tidak').then(res => {
-            penilaianServices.post(param).then(res => {
-                $scope.datas.daftar.push(res);
-                param.daftar = true;
-                pesan.Success("Berhasil menambah data");
+    // $scope.daftar = (param) => {
+    //     pesan.dialog('Yakin ingin mendaftar?', 'Yes', 'Tidak').then(res => {
+    //         penilaianServices.post(param).then(res => {
+    //             $scope.datas.daftar.push(res);
+    //             param.daftar = true;
+    //             pesan.Success("Berhasil menambah data");
+    //         })
+    //     })
+    // }
+
+    $scope.nilai = (param) => {
+        $scope.model = param;
+        $.LoadingOverlay('show');
+        penilaianServices.getNilai(param.id).then((res)=>{
+            $scope.model.kriteria = res;
+            $scope.show = 'penilaian';
+            $.LoadingOverlay('hide');
+        })
+        // $scope.model.kriteria = angular.copy($scope.datas.kriteria);
+    }
+
+    $scope.save = () => {
+        console.log($scope.model);
+        $scope.model.kriteria
+        pesan.dialog('Yakin ingin menyimpan penilaian?', 'Ya', 'Tidak').then((x) => {
+            penilaianServices.post($scope.model).then((res) => {
+                pesan.Success("Proses berhasil");
             })
         })
+    }
+
+    $scope.back = ()=>{
+        $scope.show = 'peserta';
     }
 }

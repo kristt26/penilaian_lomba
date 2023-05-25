@@ -148,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kristt26/spklib.git",
-                "reference": "a6a90b5977e7d3855a872f050ee482763a17c333"
+                "reference": "5c486fe61f652130a8ded05a7e818e8a478560b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kristt26/spklib/zipball/a6a90b5977e7d3855a872f050ee482763a17c333",
-                "reference": "a6a90b5977e7d3855a872f050ee482763a17c333",
+                "url": "https://api.github.com/repos/kristt26/spklib/zipball/5c486fe61f652130a8ded05a7e818e8a478560b2",
+                "reference": "5c486fe61f652130a8ded05a7e818e8a478560b2",
                 "shasum": ""
             },
             "default-branch": true,
@@ -178,7 +178,7 @@
                 "issues": "https://github.com/kristt26/spklib/issues",
                 "source": "https://github.com/kristt26/spklib/tree/master"
             },
-            "time": "2023-05-20T01:20:04+00:00"
+            "time": "2023-05-25T05:14:24+00:00"
         },
         {
             "name": "psr/log",

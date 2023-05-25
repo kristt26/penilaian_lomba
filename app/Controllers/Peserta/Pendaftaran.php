@@ -37,10 +37,12 @@ class Pendaftaran extends BaseController
         $peserta = new PesertaModel();
         $pendaftaran = new PendaftaranModel();
         $dtPeserta = $peserta->where('users_id', session()->get('uid'))->first();
+        $nomor = 'MURAL-'.$decode->random_strings(5);
         try {
-            $dtInsert = ['peserta_id' => $dtPeserta['id'], 'lomba_id' => $data->id, 'nomor'=>'MURAL-'.$decode->random_strings(5)];
+            $dtInsert = ['peserta_id' => $dtPeserta['id'], 'lomba_id' => $data->id, 'nomor'=>$nomor];
             $pendaftaran->insert($dtInsert);
             $dtInsert['id'] = $pendaftaran->getInsertID();
+            $dtInsert['nomor'] = $nomor;
             return $this->respondCreated($dtInsert);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
