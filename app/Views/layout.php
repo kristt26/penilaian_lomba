@@ -51,8 +51,13 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon">
-                    MURAL
+                    <img src="<?= base_url('assets/img/logo.png')?>" alt="" style="width:70%">
+                    <!-- <i class="fas fa-laugh-wink"></i> -->
                 </div>
+                <div class="sidebar-brand-text mx-3">MURAL</div>
+                <!-- <div class="sidebar-brand-icon">
+                    MURAL
+                </div> -->
                 <!-- <div class="sidebar-brand-text mx-3"></div> -->
             </a>
 
@@ -95,12 +100,12 @@
                         <span>Pendaftaran Lomba</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                    <a class="nav-link" href="<?= base_url('pengumuman') ?>">
                         <i class="fas fa-trophy"></i>
                         <span>Hasil Lomba</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('pendaftaran') ?>">
+                    <a class="nav-link" href="<?= base_url('history') ?>">
                         <i class="fas fa-history"></i>
                         <span>History Lomba</span></a>
                 </li>
@@ -144,7 +149,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white small"><strong><?= session()->get('nama')." | ".session()->get('role') ?></strong></span>
+                                <span class="mr-2 d-none d-lg-inline text-white small"><strong><?= session()->get('nama') . " | " . session()->get('role') ?></strong></span>
                                 <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> -->
                                 <img class="img-profile rounded-circle" src="<?= base_url() ?>assets/img/undraw_profile.svg">
                             </a>

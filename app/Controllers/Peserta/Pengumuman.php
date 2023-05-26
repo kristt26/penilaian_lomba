@@ -1,22 +1,26 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Peserta;
 
+use App\Controllers\BaseController;
+use App\Libraries\Decode;
 use ocs\spklib\ProfileMatching as PM;
 use App\Models\JuriModel;
 use App\Models\KriteriaModel;
 use App\Models\LombaModel;
 use App\Models\PendaftaranModel;
 use App\Models\PenilaianModel;
+use App\Models\PesertaModel;
 use App\Models\SubModel;
 
-class Laporan extends BaseController
+class Pengumuman extends BaseController
 {
     public function index()
     {
-        return view('laporan');
+        return view('peserta/pengumuman');
     }
-    public function hitung()
+
+    public function read()
     {
         try {
             $date = date('Y-m-d');
@@ -26,7 +30,15 @@ class Laporan extends BaseController
             $sub = new SubModel();
             $daftar = new PendaftaranModel();
             $penilaian = new PenilaianModel();
-            $dtLomba = (array) $this->request->getJSON();
+            $dtLomba = $lomba->select("lomba.*")
+                ->join("pendaftaran", "pendaftaran.lomba_id=lomba.id", "LEFT")
+                ->join("peserta", "peserta.id=pendaftaran.peserta_id")
+                ->where("mulai <= '$date' && selesai >='$date'")
+                ->where("peserta.users_id", session()->get('uid'))
+                ->first();
+            if (is_null($dtLomba)) throw new \Exception("Tidak ada lomba yang anda ikuti", 1);
+            if ($dtLomba['hasil'] == "0") throw new \Exception("Hasil lomba belum ditetapkan", 0);
+
             $dtPendaftaran = $daftar->select("pendaftaran.*, peserta.nama")->join("peserta", "peserta.id = pendaftaran.peserta_id")->where('lomba_id', $dtLomba['id'])->findAll();
             $dtJuri = $juri->findAll();
             $data = [];
@@ -67,7 +79,8 @@ class Laporan extends BaseController
             }
             $result = [
                 'juri' => $data,
-                'nilaiAkhir' => []
+                'nilaiAkhir' => [],
+                'lomba' => $dtLomba
             ];
             foreach ($dtPendaftaran as $key => $pend) {
                 $nilai = 0;
@@ -85,9 +98,11 @@ class Laporan extends BaseController
                 $retval = $b['nilaiAkhir'] <=> $a['nilaiAkhir'];
                 return $retval;
             });
+            $peserta = $daftar->select("pendaftaran.*")->join("peserta", "peserta.id=pendaftaran.peserta_id", "LEFT")->where("peserta.users_id", session()->get('uid'))->first();
+            $result['index'] = array_search($peserta['nomor'], array_column($result['nilaiAkhir'], 'nomor'));
             return $this->respond($result);
         } catch (\Throwable $th) {
-            return $this->fail("Juri belum selesai menilai");
+            return $this->fail($th->getMessage());
         }
     }
 }

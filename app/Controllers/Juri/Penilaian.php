@@ -26,7 +26,7 @@ class Penilaian extends BaseController
         $pendaftar = new PendaftaranModel();
         $kriteria = new KriteriaModel();
         $sub = new SubModel();
-        $data['lomba'] = $lomba->asObject()->where("mulai <= '$date' && selesai >='$date'")->findAll();
+        $data['lomba'] = $lomba->asObject()->where("mulai <= '$date' AND selesai >='$date' AND hasil='0'")->findAll();
         if(count($data)>0){
             foreach ($data['lomba'] as $key => $value) {
                 $value->peserta = $pendaftar->select("pendaftaran.*, peserta.nama, peserta.phone")

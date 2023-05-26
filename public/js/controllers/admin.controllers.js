@@ -8,6 +8,8 @@ angular.module('adminctrl', [])
     .controller('laporanController', laporanController)
     // Peserta
     .controller('pendaftaranController', pendaftaranController)
+    .controller('pengumumanController', pengumumanController)
+    .controller('historyController', historyController)
     // Juri
     .controller('penilaianController', penilaianController)
     ;
@@ -66,6 +68,16 @@ function lombaController($scope, lombaServices, pesan, helperServices) {
 
     $scope.subKlasifikasi = (param) => {
         document.location.href = helperServices.url + "admin/sub_klasifikasi/data/" + param.id;
+    }
+
+    $scope.hasil = (param)=>{
+        param.hasil = "1";
+        pesan.dialog('Yakin mengumumkan hasil lomba?', 'Yes', 'Tidak').then(res => {
+            lombaServices.put(param).then(res => {
+                $scope.model = {};
+                pesan.Success("Berhasil mengubah data");
+            })
+        })
     }
 }
 
@@ -284,12 +296,16 @@ function laporanController($scope, lombaServices, pesan, helperServices, laporan
     $scope.datas = {};
     $scope.lomba = {};
     $scope.model = {};
+    $.LoadingOverlay('show');
     lombaServices.get().then((res) => {
         $scope.lomba = res;
+        $.LoadingOverlay('hide');
     })
     $scope.hitung = (param) => {
+        $.LoadingOverlay('show');
         laporanServices.hitung(param).then(res => {
             $scope.datas = res;
+            $.LoadingOverlay('hide');
             console.log(res);
         });
     }
@@ -303,6 +319,7 @@ function pendaftaranController($scope, pendaftaranServices, pesan, helperService
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
     $scope.model = {};
+    $.LoadingOverlay('show');
     pendaftaranServices.get().then((res) => {
         $scope.datas = res;
         if ($scope.datas.lomba.length > 0) {
@@ -314,17 +331,45 @@ function pendaftaranController($scope, pendaftaranServices, pesan, helperService
                 }
             });
         } else pesan.info('Tidak ada lomba yang diselenggarakan');
-        console.log(res);
+        $.LoadingOverlay('hide');
+        // console.log(res);
     })
     $scope.daftar = (param) => {
         pesan.dialog('Yakin ingin mendaftar?', 'Yes', 'Tidak').then(res => {
             pendaftaranServices.post(param).then(res => {
+                param.nomor = res.nomor;
                 $scope.datas.daftar.push(res);
                 param.daftar = true;
                 pesan.Success("Berhasil menambah data");
             })
         })
     }
+}
+
+function pengumumanController($scope, pengumumanServices, pesan, helperServices) {
+    $scope.setTitle = "Pengumuman Hasil Lomba";
+    $scope.$emit("SendUp", $scope.setTitle);
+    $scope.datas = {};
+    $scope.model = {};
+    $.LoadingOverlay('show');
+    pengumumanServices.get().then((res) => {
+        $scope.datas = res;
+        $.LoadingOverlay('hide');
+        console.log(res);
+    })
+}
+
+function historyController($scope, historyServices, pesan, helperServices) {
+    $scope.setTitle = "History Lomba";
+    $scope.$emit("SendUp", $scope.setTitle);
+    $scope.datas = {};
+    $scope.model = {};
+    $.LoadingOverlay('show');
+    historyServices.get().then((res) => {
+        $scope.datas = res;
+        $.LoadingOverlay('hide');
+        console.log(res);
+    })
 }
 
 // Penilaian

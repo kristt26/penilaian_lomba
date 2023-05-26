@@ -10,6 +10,8 @@ angular.module('admin.service', [])
     
     // Peserta
     .factory('pendaftaranServices', pendaftaranServices)
+    .factory('pengumumanServices', pengumumanServices)
+    .factory('historyServices', historyServices)
     // Juri
     .factory('penilaianServices', penilaianServices)
     ;
@@ -130,6 +132,7 @@ function lombaServices($http, $q, helperServices, AuthService, pesan) {
                     data.mulai = param.mulai;
                     data.selesai = param.selesai;
                     data.desc = param.desc;
+                    data.hasil = param.hasil;
                 }
                 def.resolve(res.data);
             },
@@ -695,6 +698,62 @@ function pendaftaranServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+}
+
+function pengumumanServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'pengumuman/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+}
+
+function historyServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'history/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
 }
 
 // Juri

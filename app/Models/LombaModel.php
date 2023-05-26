@@ -13,5 +13,5 @@ class LombaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['lomba', 'mulai', 'selesai', 'desc'];
+    protected $allowedFields    = ['lomba', 'mulai', 'selesai', 'desc', 'hasil'];
 }

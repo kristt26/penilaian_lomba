@@ -81,6 +81,16 @@ $routes->group('pendaftaran', function ($routes) {
     $routes->delete('delete/(:num)', 'Peserta\Pendaftaran::deleted/$1');
 });
 
+$routes->group('pengumuman', function ($routes) {
+    $routes->get('', 'Peserta\Pengumuman::index');
+    $routes->get('read', 'Peserta\Pengumuman::read');
+});
+
+$routes->group('history', function ($routes) {
+    $routes->get('', 'Peserta\History::index');
+    $routes->get('read', 'Peserta\History::read');
+});
+
 // Juri
 $routes->group('penilaian', function ($routes) {
     $routes->get('', 'Juri\Penilaian::index');
