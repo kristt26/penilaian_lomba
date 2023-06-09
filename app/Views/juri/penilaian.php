@@ -39,7 +39,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in lomba.peserta">
+                                    <tr ng-repeat="item in lomba.peserta" ng-class = "{'bg-primary': item.statusNilai}">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.nomor}}</td>
                                         <td>{{item.nama}}</td>
@@ -83,7 +83,7 @@
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-4 col-form-label col-form-label-sm">{{sub.nama}} | {{sub.bobot}}%</label>
                                                         <div class="col-sm-5">
-                                                            <select class="form-control form-control-sm" id="sub{{$index}}" ng-model="sub.nilai">
+                                                            <select class="form-control form-control-sm" id="sub{{$index}}" ng-model="sub.nilai" required>
                                                                 <option value="">---Pilih Nilai---</option>
                                                                 <option value="5">Sangat Baik (5)</option>
                                                                 <option value="4">Baik (4)</option>
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="model.statusNilai">Simpan</button>
                         </div>
                     </form>
                 </div>

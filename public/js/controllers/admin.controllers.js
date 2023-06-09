@@ -400,7 +400,9 @@ function penilaianController($scope, penilaianServices, pesan, helperServices) {
         penilaianServices.getNilai(param.id).then((res)=>{
             $scope.model.kriteria = res;
             $scope.show = 'penilaian';
+            console.log(res);
             $.LoadingOverlay('hide');
+
         })
         // $scope.model.kriteria = angular.copy($scope.datas.kriteria);
     }

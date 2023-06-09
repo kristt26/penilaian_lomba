@@ -53,17 +53,18 @@ class Auth extends BaseController
         $peserta = new PesertaModel();
         try {
             $conn->transBegin();
-            $user->insert(['username'=>$data->username, 'password'=>password_hash($data->password, PASSWORD_DEFAULT), 'role'=>'Peserta']);
-            $data->users_id = $user->getInsertID();
-            $peserta->insert($data);
-            $data->id = $peserta->getInsertID();
-            if($conn->transStatus()){
-                $conn->transCommit();
-                return $this->respondCreated($data);
-            }else{
-                throw new \Exception("Gagal Registrasi", 1);
-                
-            }
+            if($user->where('username', $data->username)->countAllResults()==0){
+                $user->insert(['username'=>$data->username, 'password'=>password_hash($data->password, PASSWORD_DEFAULT), 'role'=>'Peserta']);
+                $data->users_id = $user->getInsertID();
+                $peserta->insert($data);
+                $data->id = $peserta->getInsertID();
+                if($conn->transStatus()){
+                    $conn->transCommit();
+                    return $this->respondCreated($data);
+                }else{
+                    throw new \Exception("Gagal Registrasi", 1);
+                }
+            }else throw new \Exception("User yang anda masukkan telah terdaftar", 1);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
         }

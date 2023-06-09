@@ -29,7 +29,7 @@ class Penilaian extends BaseController
         $data['lomba'] = $lomba->asObject()->where("mulai <= '$date' AND selesai >='$date' AND hasil='0'")->findAll();
         if(count($data)>0){
             foreach ($data['lomba'] as $key => $value) {
-                $value->peserta = $pendaftar->select("pendaftaran.*, peserta.nama, peserta.phone")
+                $value->peserta = $pendaftar->asObject()->select("pendaftaran.*, peserta.nama, peserta.phone, (select penilaian.nilai from penilaian where penilaian.pendaftaran_id=pendaftaran.id limit 1) as statusNilai")
                 ->join('peserta', 'peserta.id = pendaftaran.peserta_id')->where('lomba_id', $value->id)->findAll();
             }
         }
