@@ -18,7 +18,7 @@ function dashboardController($scope, dashboardServices) {
     $scope.setTitle = "Dashboard";
     $scope.$emit("SendUp", $scope.setTitle);
     $scope.datas = {};
-    $scope.paragraph = "Sistem penjurusan menggunakan metode Moora pada SMA .....";
+    $scope.paragraph = "Sistem Informasi Penilaian lomba MURAL";
     // dashboardServices.get().then(res=>{
     //     $scope.datas = res;
     // })
