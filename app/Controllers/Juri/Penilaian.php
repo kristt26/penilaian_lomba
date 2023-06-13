@@ -54,6 +54,7 @@ class Penilaian extends BaseController
                 $nilai = $penilaian->where('sub_id', $value->id)->where('pendaftaran_id', $id)->where('juri_id', $dtJuri['id'])->first();
                 if($nilai){
                     $value->nilai = $nilai['nilai'];
+                    $value->penilaian_id = $nilai['id'];
                 } 
             }
             // $sub->select('penilaian.*, sub.nama, sub.code, sub.bobot')->join('penilaian', 'penilaian.sub_id=sub.id', 'LEFT')->findAll();
@@ -72,14 +73,18 @@ class Penilaian extends BaseController
             $dtJuri = $juri->where('users_id', session()->get('uid'))->first();
             foreach ($data->kriteria as $keyKriteria => $kriteria) {
                 foreach ($kriteria->sub as $keySub => $sub) {
-                    $item = [
-                        'sub_id'=>$sub->id,
-                        'pendaftaran_id'=>$data->id,
-                        'nilai'=>$sub->nilai,
-                        'juri_id' => $dtJuri['id']
-                    ];
-                    $penilaian->insert($item);
-                    $item['id']=$penilaian->getInsertID();
+                    if(is_null($sub->id)){
+                        $item = [
+                            'sub_id'=>$sub->id,
+                            'pendaftaran_id'=>$data->id,
+                            'nilai'=>$sub->nilai,
+                            'juri_id' => $dtJuri['id']
+                        ];
+                        $penilaian->insert($item);
+                        $item['id']=$penilaian->getInsertID();
+                    }else{
+                        $penilaian->update($sub->penilaian_id, ['nilai'=>$sub->nilai]);
+                    }
                 }
             }
             if($conn->transStatus()){

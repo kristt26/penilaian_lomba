@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-sm" ng-disabled="model.statusNilai">Simpan</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                         </div>
                     </form>
                 </div>
