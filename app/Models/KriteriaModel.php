@@ -13,5 +13,5 @@ class KriteriaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kriteria', 'profileKriteria', 'code', 'bobot'];
+    protected $allowedFields    = ['kriteria', 'code', 'bobot'];
 }

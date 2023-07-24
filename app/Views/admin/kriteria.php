@@ -19,10 +19,6 @@
                             <input type="text" class="form-control" ng-model="model.code" required>
                         </div>
                         <div ng-class="{'form-group pmd-textfield pmd-textfield-floating-label': !model.id, 'form-group pmd-textfield': model.id}">
-                            <label class="control-label">Profile Kriteria</label>
-                            <input type="number" class="form-control" ng-model="model.profileKriteria" required>
-                        </div>
-                        <div ng-class="{'form-group pmd-textfield pmd-textfield-floating-label': !model.id, 'form-group pmd-textfield': model.id}">
                             <label class="control-label">Bobot</label>
                             <input type="number" class="form-control" ng-model="model.bobot" placeholder="Bobot dalam %" required>
                         </div>
@@ -47,7 +43,6 @@
                                     <th>No</th>
                                     <th>Nama Kriteria</th>
                                     <th>Kode</th>
-                                    <th>Profile Kriteria</th>
                                     <th>Bobot</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 </tr>
@@ -57,7 +52,6 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{item.kriteria}}</td>
                                     <td>{{item.code}}</td>
-                                    <td>{{item.profileKriteria}}</td>
                                     <td>{{item.bobot}}</td>
                                     <td>
                                         <button type="submit" class="btn btn-warning pmd-ripple-effect btn-sm" ng-click="edit(item)"><i class="fas fa-edit fa-sm fa-fw"></i></button>
@@ -90,6 +84,10 @@
                             <input type="text" class="form-control" ng-model="model.code" required>
                         </div>
                         <div ng-class="{'form-group pmd-textfield pmd-textfield-floating-label': !model.id, 'form-group pmd-textfield': model.id}">
+                            <label class="control-label">Profile Kriteria</label>
+                            <input type="number" class="form-control" ng-model="model.profileKriteria" required>
+                        </div>
+                        <div ng-class="{'form-group pmd-textfield pmd-textfield-floating-label': !model.id, 'form-group pmd-textfield': model.id}">
                             <label class="control-label">Bobot</label>
                             <input type="number" class="form-control" ng-model="model.bobot" placeholder="Bobot dalam %" required>
                         </div>
@@ -115,6 +113,7 @@
                                     <th>No</th>
                                     <th>Sub Kriteria</th>
                                     <th>Kode</th>
+                                    <th>Profile Target</th>
                                     <th>Bobot</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 </tr>
@@ -124,6 +123,7 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{item.nama}}</td>
                                     <td>{{item.code}}</td>
+                                    <td>{{item.profileKriteria}}</td>
                                     <td>{{item.bobot}}</td>
                                     <td>
                                         <button type="submit" class="btn btn-warning pmd-ripple-effect btn-sm" ng-click="edit(item)"><i class="fas fa-edit fa-sm fa-fw"></i></button>
