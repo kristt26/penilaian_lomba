@@ -402,7 +402,8 @@ function subServices($http, $q, helperServices, AuthService, pesan) {
                     data.nama = param.nama;
                     data.kode = param.kode;
                     data.bobot = param.bobot;
-                    data.type = param.type;
+                    data.profileKriteria = param.profileKriteria;
+                    data.status = param.status;
                 }
                 def.resolve(res.data);
             },
@@ -553,6 +554,7 @@ function laporanServices($http, $q, helperServices, AuthService, pesan) {
             (err) => {
                 pesan.error(err.data.messages.error);
                 def.reject(err);
+                $.LoadingOverlay('hide');
             }
         );
         return def.promise;

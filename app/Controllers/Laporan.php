@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use ocs\spklib\ProfileMatching as PM;
+use ocs\spklib\ProfileMatchingNew as PM;
 use App\Models\JuriModel;
 use App\Models\KriteriaModel;
 use App\Models\LombaModel;
@@ -54,7 +54,10 @@ class Laporan extends BaseController
                             $nilai = $penilaian->where('juri_id', $jur['id'])->where('sub_id', $subKriteria['id'])->where('pendaftaran_id', $pendaftar['id'])->first();
                             $itemSub = [
                                 "code" => $subKriteria['code'],
-                                "nilai" => (int)$nilai['nilai']
+                                "nilai" => (int)$nilai['nilai'],
+                                "profileKriteria" => $subKriteria['profileKriteria'],
+                                'status' => $subKriteria['status']
+
                             ];
                             $itemKriteria['sub'][] = $itemSub;
                         }
@@ -62,7 +65,7 @@ class Laporan extends BaseController
                     }
                     $itemJuri[] = $alt;
                 }
-                $data[] = new PM($dtKriteria, $itemJuri, 0, true, 4);
+                $data[] = new PM($dtKriteria, $itemJuri, 0, true, 2);
                 // $data[] = $itemJuri;
             }
             $result = [

@@ -70,7 +70,7 @@ function lombaController($scope, lombaServices, pesan, helperServices) {
         document.location.href = helperServices.url + "admin/sub_klasifikasi/data/" + param.id;
     }
 
-    $scope.hasil = (param)=>{
+    $scope.hasil = (param) => {
         param.hasil = "1";
         pesan.dialog('Yakin mengumumkan hasil lomba?', 'Yes', 'Tidak').then(res => {
             lombaServices.put(param).then(res => {
@@ -173,6 +173,17 @@ function kriteriaController($scope, kriteriaServices, pesan, helperServices, sub
             $scope.model.kriteria_id = $scope.kriteria.id;
             if ($scope.model.id) {
                 subServices.put($scope.model).then(res => {
+                    var kri = $scope.datas.find(x => x.id == $scope.model.kriteria_id);
+                    if (kri) {
+                        var data = kri.sub.find(x=>x.id == $scope.model.id);
+                        if(data){
+                            data.nama = $scope.model.nama;
+                            data.kode = $scope.model.kode;
+                            data.bobot = $scope.model.bobot;
+                            data.profileKriteria = $scope.model.profileKriteria;
+                            data.status = $scope.model.status;
+                        }
+                    }
                     $scope.model = {};
                     pesan.Success("Berhasil mengubah data");
                 })
@@ -397,7 +408,7 @@ function penilaianController($scope, penilaianServices, pesan, helperServices) {
     $scope.nilai = (param) => {
         $scope.model = param;
         $.LoadingOverlay('show');
-        penilaianServices.getNilai(param.id).then((res)=>{
+        penilaianServices.getNilai(param.id).then((res) => {
             $scope.model.kriteria = res;
             $scope.show = 'penilaian';
             console.log(res);
@@ -417,7 +428,7 @@ function penilaianController($scope, penilaianServices, pesan, helperServices) {
         })
     }
 
-    $scope.back = ()=>{
+    $scope.back = () => {
         $scope.show = 'peserta';
     }
 }

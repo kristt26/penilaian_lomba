@@ -91,6 +91,10 @@
                             <label class="control-label">Bobot</label>
                             <input type="number" class="form-control" ng-model="model.bobot" placeholder="Bobot dalam %" required>
                         </div>
+                        <div ng-class="{'form-group pmd-textfield pmd-textfield-floating-label': !model.id, 'form-group pmd-textfield': model.id}">
+                            <label class="control-label">Status</label>
+                            <input type="text" class="form-control" ng-model="model.status" required>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary pmd-ripple-effect btn-sm">Simpan</button>
@@ -115,6 +119,7 @@
                                     <th>Kode</th>
                                     <th>Profile Target</th>
                                     <th>Bobot</th>
+                                    <th>Status</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 </tr>
                             </thead>
@@ -125,6 +130,7 @@
                                     <td>{{item.code}}</td>
                                     <td>{{item.profileKriteria}}</td>
                                     <td>{{item.bobot}}</td>
+                                    <td>{{item.status}}</td>
                                     <td>
                                         <button type="submit" class="btn btn-warning pmd-ripple-effect btn-sm" ng-click="edit(item)"><i class="fas fa-edit fa-sm fa-fw"></i></button>
                                         <button type="submit" class="btn btn-danger pmd-ripple-effect btn-sm" ng-click="deleteRange(item)"><i class="fas fa-trash-alt fa-sm fa-fw"></i></button>

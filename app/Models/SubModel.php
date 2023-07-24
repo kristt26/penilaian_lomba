@@ -13,5 +13,5 @@ class SubModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kriteria_id', 'nama', 'profileKriteria', 'code', 'bobot'];
+    protected $allowedFields    = ['kriteria_id', 'nama', 'profileKriteria', 'code', 'bobot', 'status'];
 }
