@@ -723,6 +723,7 @@ function pengumumanServices($http, $q, helperServices, AuthService, pesan) {
             },
             (err) => {
                 pesan.error(err.data.messages.error);
+                $.LoadingOverlay("hide");
                 def.reject(err);
             }
         );
