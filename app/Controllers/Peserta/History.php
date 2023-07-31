@@ -4,7 +4,7 @@ namespace App\Controllers\Peserta;
 
 use App\Controllers\BaseController;
 use App\Models\PendaftaranModel;
-use ocs\spklib\ProfileMatching as PM;
+use ocs\spklib\ProfileMatchingNew as PM;
 use App\Models\JuriModel;
 use App\Models\KriteriaModel;
 use App\Models\LombaModel;
