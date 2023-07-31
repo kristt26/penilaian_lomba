@@ -24,7 +24,7 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{item.lomba.lomba}}</td>
                                     <td>{{item.lomba.mulai | date: 'dd MMMM y'}} s/d {{item.lomba.selesai | date: 'dd MMMM y'}}</td>
-                                    <td>{{$index+1}}</td>
+                                    <td>{{item.index+1}}</td>
                                 </tr>
                             </tbody>
                         </table>
