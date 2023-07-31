@@ -73,7 +73,7 @@ class Penilaian extends BaseController
             $dtJuri = $juri->where('users_id', session()->get('uid'))->first();
             foreach ($data->kriteria as $keyKriteria => $kriteria) {
                 foreach ($kriteria->sub as $keySub => $sub) {
-                    if(is_null($sub->id)){
+                    if(!isset($sub->penilaian_id)){
                         $item = [
                             'sub_id'=>$sub->id,
                             'pendaftaran_id'=>$data->id,
